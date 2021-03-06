@@ -22,6 +22,7 @@ import androidx.compose.animation.animateColor
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -45,7 +46,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.airbnb.mvrx.compose.collectAsState
 import com.airbnb.mvrx.compose.mavericksViewModel
-import com.example.androiddevchallenge.data.TimerState
 import com.example.androiddevchallenge.data.TimerViewModel
 import com.example.androiddevchallenge.ui.theme.MyTheme
 import com.example.androiddevchallenge.ui.theme.tileColor
@@ -68,26 +68,31 @@ val BOX_SIZE = 50.dp
 
 @Composable
 fun MyApp() {
-    val timerViewModel: TimerViewModel = mavericksViewModel()
-    val state = timerViewModel.collectAsState()
+
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(color = Color.DarkGray),
         contentAlignment = Alignment.Center
     ) {
-        Grid(state.value)
+        Grid()
     }
 }
 
 @Composable
-fun Grid(state: TimerState) {
+fun Grid() {
+    val timerViewModel: TimerViewModel = mavericksViewModel()
+    val state = timerViewModel.collectAsState()
     Column(
-        modifier = Modifier.wrapContentSize(),
+        modifier = Modifier
+            .wrapContentSize()
+            .clickable {
+                timerViewModel.toggle()
+            },
         verticalArrangement = Arrangement.spacedBy(4.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        var items = state.numCells
+        var items = state.value.numCells
         while (items > 0) {
             Row(
                 modifier = Modifier
@@ -95,10 +100,10 @@ fun Grid(state: TimerState) {
                     .wrapContentHeight(),
                 horizontalArrangement = Arrangement.spacedBy(4.dp),
             ) {
-                for (i in 1..state.numColumns) {
+                for (i in 1..state.value.numColumns) {
                     if (items == 0) break
-                    val index = state.numCells - items
-                    Tile(index, state.timerDisplay[index])
+                    val index = state.value.numCells - items
+                    Tile(index, state.value.timerDisplay[index])
                     items--
                 }
             }
@@ -108,7 +113,7 @@ fun Grid(state: TimerState) {
 
 @Composable fun Tile(index: Int = 0, on: Int = 0) {
     val scope = rememberCoroutineScope()
-    val tileState = remember { mutableStateOf(0) }
+    val tileState = remember(index) { mutableStateOf(0) }
     val transition = updateTransition(targetState = tileState.value)
     val color = transition.animateColor() { state ->
         when (state) {
@@ -124,7 +129,7 @@ fun Grid(state: TimerState) {
     }
 
     scope.launch {
-        delay(100L * index)
+        delay(10L * index)
         tileState.value = on
     }
 

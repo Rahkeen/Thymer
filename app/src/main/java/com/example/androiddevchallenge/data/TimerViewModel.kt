@@ -37,7 +37,21 @@ val TWO = listOf(
 data class TimerState(
     val numCells: Int = 25,
     val numColumns: Int = 5,
+    val timerValue: Int = 1,
     val timerDisplay: List<Int> = ONE
 ) : MavericksState
 
-class TimerViewModel(initialState: TimerState) : MavericksViewModel<TimerState>(initialState)
+class TimerViewModel(initialState: TimerState) : MavericksViewModel<TimerState>(initialState) {
+    fun toggle() {
+        setState {
+            updateTimerValue(this)
+        }
+    }
+
+    private fun updateTimerValue(state: TimerState): TimerState {
+        return when (state.timerValue) {
+            1 -> state.copy(timerValue = 2, timerDisplay = TWO)
+            else -> state.copy(timerValue = 1, timerDisplay = ONE)
+        }
+    }
+}
