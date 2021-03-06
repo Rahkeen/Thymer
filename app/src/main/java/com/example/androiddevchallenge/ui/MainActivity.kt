@@ -13,32 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.androiddevchallenge
+package com.example.androiddevchallenge.ui
 
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.animateColor
 import androidx.compose.animation.core.animateFloat
-import androidx.compose.animation.core.spring
-import androidx.compose.animation.core.tween
 import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionContext
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -49,13 +43,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.airbnb.mvrx.compose.collectAsState
+import com.airbnb.mvrx.compose.mavericksViewModel
+import com.example.androiddevchallenge.data.TimerState
+import com.example.androiddevchallenge.data.TimerViewModel
 import com.example.androiddevchallenge.ui.theme.MyTheme
 import com.example.androiddevchallenge.ui.theme.tileColor
 import com.example.androiddevchallenge.ui.theme.tileSelectedColor
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -72,24 +68,26 @@ val BOX_SIZE = 50.dp
 
 @Composable
 fun MyApp() {
+    val timerViewModel: TimerViewModel = mavericksViewModel()
+    val state = timerViewModel.collectAsState()
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(color = Color.DarkGray),
         contentAlignment = Alignment.Center
     ) {
-        Grid()
+        Grid(state.value)
     }
 }
 
 @Composable
-fun Grid(numItems: Int = 25, columns: Int = 5) {
+fun Grid(state: TimerState) {
     Column(
         modifier = Modifier.wrapContentSize(),
         verticalArrangement = Arrangement.spacedBy(4.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        var items = numItems
+        var items = state.numCells
         while (items > 0) {
             Row(
                 modifier = Modifier
@@ -97,10 +95,10 @@ fun Grid(numItems: Int = 25, columns: Int = 5) {
                     .wrapContentHeight(),
                 horizontalArrangement = Arrangement.spacedBy(4.dp),
             ) {
-                for (i in 1..columns) {
+                for (i in 1..state.numColumns) {
                     if (items == 0) break
-                    val index = numItems - items
-                    Tile(index, TWO[index])
+                    val index = state.numCells - items
+                    Tile(index, state.timerDisplay[index])
                     items--
                 }
             }
@@ -108,25 +106,8 @@ fun Grid(numItems: Int = 25, columns: Int = 5) {
     }
 }
 
-val ONE = listOf(
-    0,1,1,0,0,
-    0,0,1,0,0,
-    0,0,1,0,0,
-    0,0,1,0,0,
-    0,1,1,1,0,
-)
-
-val TWO = listOf(
-    0,1,1,1,0,
-    0,0,0,1,0,
-    0,1,1,1,0,
-    0,1,0,0,0,
-    0,1,1,1,0,
-)
-
-
 @Composable fun Tile(index: Int = 0, on: Int = 0) {
-    val coroutineScope = rememberCoroutineScope()
+    val scope = rememberCoroutineScope()
     val tileState = remember { mutableStateOf(0) }
     val transition = updateTransition(targetState = tileState.value)
     val color = transition.animateColor() { state ->
@@ -142,7 +123,7 @@ val TWO = listOf(
         }
     }
 
-    coroutineScope.launch {
+    scope.launch {
         delay(100L * index)
         tileState.value = on
     }
@@ -156,13 +137,6 @@ val TWO = listOf(
             )
             .drawBehind {
                 drawRect(color = color.value)
-            }
-            .clickable(interactionSource = MutableInteractionSource(), indication = null) {
-                if (tileState.value == 1) {
-                    tileState.value = 0
-                } else {
-                    tileState.value = 1
-                }
             }
     )
 }
