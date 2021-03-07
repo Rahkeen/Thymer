@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
-val BOX_SIZE = 50.dp
+val BOX_SIZE = 25.dp
 
 @Composable
 fun MyApp() {
@@ -87,7 +87,7 @@ fun Grid() {
         modifier = Modifier
             .wrapContentSize()
             .clickable {
-                timerViewModel.increment()
+                timerViewModel.start()
             },
         verticalArrangement = Arrangement.spacedBy(4.dp),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -111,7 +111,8 @@ fun Grid() {
     }
 }
 
-@Composable fun Tile(index: Int = 0, on: Int = 0) {
+@Composable
+fun Tile(index: Int = 0, on: Int = 0) {
     val scope = rememberCoroutineScope()
     val tileState = remember(index) { mutableStateOf(0) }
     val transition = updateTransition(targetState = tileState.value)

@@ -17,6 +17,8 @@ package com.example.androiddevchallenge.data
 
 import com.airbnb.mvrx.MavericksState
 import com.airbnb.mvrx.MavericksViewModel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 data class TimerState(
     val numCells: Int = 25,
@@ -26,23 +28,16 @@ data class TimerState(
 ) : MavericksState
 
 class TimerViewModel(initialState: TimerState) : MavericksViewModel<TimerState>(initialState) {
-    fun increment() {
-        setState {
-            updateTimerValue(this)
-        }
-    }
+    private val startTime = 9
 
-    private fun updateTimerValue(state: TimerState): TimerState {
-        return if (state.timerValue == 9) {
-            state.copy(
-                timerValue = 0,
-                timerDisplay = ZERO
-            )
-        } else {
-            state.copy(
-                timerValue = state.timerValue + 1,
-                timerDisplay = intToDisplay.getValue(state.timerValue + 1)
-            )
+    fun start() {
+        viewModelScope.launch {
+            for (i in startTime downTo 0) {
+                setState {
+                    copy(timerValue = i, timerDisplay = intToDisplay.getValue(i))
+                }
+                delay(1000L)
+            }
         }
     }
 }
