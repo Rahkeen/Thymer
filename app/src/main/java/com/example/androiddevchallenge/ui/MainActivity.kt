@@ -19,7 +19,9 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.animateColor
+import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.tween
 import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -40,7 +42,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -71,7 +72,7 @@ fun MyApp() {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = Color.DarkGray),
+            .background(color = tileColor),
         contentAlignment = Alignment.Center
     ) {
         Grid()
@@ -85,6 +86,7 @@ fun Grid() {
     Column(
         modifier = Modifier
             .wrapContentSize()
+            .animateContentSize()
             .clickable {
                 timerViewModel.start()
             },
@@ -96,11 +98,12 @@ fun Grid() {
             Row(
                 modifier = Modifier
                     .wrapContentWidth()
-                    .wrapContentHeight(),
+                    .wrapContentHeight()
+                    .animateContentSize(),
                 horizontalArrangement = Arrangement.spacedBy(4.dp),
             ) {
                 for (item in 0 until state.value.numColumns) {
-                    Tile(itemId, state.value.timerDisplay.numbers[row][item])
+                    Tile(itemId, state.value.timerDisplay.numbers[row][item], row)
                     itemId++
                 }
             }
@@ -109,17 +112,17 @@ fun Grid() {
 }
 
 @Composable
-fun Tile(index: Int = 0, on: Int = 0) {
+fun Tile(index: Int = 0, on: Int = 0, rowIndex: Int = 0) {
     val scope = rememberCoroutineScope()
     val tileState = remember(index) { mutableStateOf(0) }
     val transition = updateTransition(targetState = tileState.value)
-    val color = transition.animateColor { state ->
+    val color = transition.animateColor(transitionSpec = { tween(durationMillis = 500) }) { state ->
         when (state) {
             0 -> tileColor
             else -> tileSelectedColor
         }
     }
-    val rotation = transition.animateFloat() { state ->
+    val rotation = transition.animateFloat(transitionSpec = { tween(durationMillis = 500) }) { state ->
         when (state) {
             0 -> 0F
             else -> 180F
@@ -127,7 +130,7 @@ fun Tile(index: Int = 0, on: Int = 0) {
     }
 
     scope.launch {
-        delay(5L * index)
+        delay(50L * rowIndex)
         tileState.value = on
     }
 
