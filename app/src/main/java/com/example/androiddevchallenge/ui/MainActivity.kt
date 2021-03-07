@@ -68,7 +68,6 @@ val BOX_SIZE = 25.dp
 
 @Composable
 fun MyApp() {
-
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -92,19 +91,17 @@ fun Grid() {
         verticalArrangement = Arrangement.spacedBy(4.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        var items = state.value.numCells
-        while (items > 0) {
+        var itemId = 0
+        for (row in state.value.timerDisplay.numbers.indices) {
             Row(
                 modifier = Modifier
                     .wrapContentWidth()
                     .wrapContentHeight(),
                 horizontalArrangement = Arrangement.spacedBy(4.dp),
             ) {
-                for (i in 1..state.value.numColumns) {
-                    if (items == 0) break
-                    val index = state.value.numCells - items
-                    Tile(index, state.value.timerDisplay[index])
-                    items--
+                for (item in 0 until state.value.numColumns) {
+                    Tile(itemId, state.value.timerDisplay.numbers[row][item])
+                    itemId++
                 }
             }
         }
@@ -116,7 +113,7 @@ fun Tile(index: Int = 0, on: Int = 0) {
     val scope = rememberCoroutineScope()
     val tileState = remember(index) { mutableStateOf(0) }
     val transition = updateTransition(targetState = tileState.value)
-    val color = transition.animateColor() { state ->
+    val color = transition.animateColor { state ->
         when (state) {
             0 -> tileColor
             else -> tileSelectedColor
@@ -130,7 +127,7 @@ fun Tile(index: Int = 0, on: Int = 0) {
     }
 
     scope.launch {
-        delay(10L * index)
+        delay(5L * index)
         tileState.value = on
     }
 

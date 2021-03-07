@@ -15,84 +15,104 @@
  */
 package com.example.androiddevchallenge.data
 
-val ONE = listOf(
-    0, 1, 1, 0, 0,
-    0, 0, 1, 0, 0,
-    0, 0, 1, 0, 0,
-    0, 0, 1, 0, 0,
-    0, 1, 1, 1, 0,
+val ONE = TimerDisplay(
+    listOf(
+        listOf(0, 1, 1, 0, 0),
+        listOf(0, 0, 1, 0, 0),
+        listOf(0, 0, 1, 0, 0),
+        listOf(0, 0, 1, 0, 0),
+        listOf(0, 1, 1, 1, 0),
+    )
 )
 
-val TWO = listOf(
-    0, 1, 1, 1, 0,
-    0, 0, 0, 1, 0,
-    0, 1, 1, 1, 0,
-    0, 1, 0, 0, 0,
-    0, 1, 1, 1, 0,
+val TWO = TimerDisplay(
+    listOf(
+        listOf(0, 1, 1, 1, 0),
+        listOf(0, 0, 0, 1, 0),
+        listOf(0, 1, 1, 1, 0),
+        listOf(0, 1, 0, 0, 0),
+        listOf(0, 1, 1, 1, 0),
+    )
 )
 
-val THREE = listOf(
-    0, 1, 1, 1, 0,
-    0, 0, 0, 1, 0,
-    0, 1, 1, 1, 0,
-    0, 0, 0, 1, 0,
-    0, 1, 1, 1, 0,
+val THREE = TimerDisplay(
+    listOf(
+        listOf(0, 1, 1, 1, 0),
+        listOf(0, 0, 0, 1, 0),
+        listOf(0, 1, 1, 1, 0),
+        listOf(0, 0, 0, 1, 0),
+        listOf(0, 1, 1, 1, 0),
+    )
 )
 
-val FOUR = listOf(
-    0, 1, 0, 1, 0,
-    0, 1, 0, 1, 0,
-    0, 1, 1, 1, 0,
-    0, 0, 0, 1, 0,
-    0, 0, 0, 1, 0,
+val FOUR = TimerDisplay(
+    listOf(
+        listOf(0, 1, 0, 1, 0),
+        listOf(0, 1, 0, 1, 0),
+        listOf(0, 1, 1, 1, 0),
+        listOf(0, 0, 0, 1, 0),
+        listOf(0, 0, 0, 1, 0),
+    )
 )
 
-val FIVE = listOf(
-    0, 1, 1, 1, 0,
-    0, 1, 0, 0, 0,
-    0, 1, 1, 1, 0,
-    0, 0, 0, 1, 0,
-    0, 1, 1, 1, 0,
+val FIVE = TimerDisplay(
+    listOf(
+        listOf(0, 1, 1, 1, 0),
+        listOf(0, 1, 0, 0, 0),
+        listOf(0, 1, 1, 1, 0),
+        listOf(0, 0, 0, 1, 0),
+        listOf(0, 1, 1, 1, 0),
+    )
 )
 
-val SIX = listOf(
-    0, 1, 1, 1, 0,
-    0, 1, 0, 0, 0,
-    0, 1, 1, 1, 0,
-    0, 1, 0, 1, 0,
-    0, 1, 1, 1, 0,
+val SIX = TimerDisplay(
+    listOf(
+        listOf(0, 1, 1, 1, 0),
+        listOf(0, 1, 0, 0, 0),
+        listOf(0, 1, 1, 1, 0),
+        listOf(0, 1, 0, 1, 0),
+        listOf(0, 1, 1, 1, 0),
+    )
 )
 
-val SEVEN = listOf(
-    0, 1, 1, 1, 0,
-    0, 0, 0, 1, 0,
-    0, 0, 0, 1, 0,
-    0, 0, 0, 1, 0,
-    0, 0, 0, 1, 0,
+val SEVEN = TimerDisplay(
+    listOf(
+        listOf(0, 1, 1, 1, 0),
+        listOf(0, 0, 0, 1, 0),
+        listOf(0, 0, 0, 1, 0),
+        listOf(0, 0, 0, 1, 0),
+        listOf(0, 0, 0, 1, 0),
+    )
 )
 
-val EIGHT = listOf(
-    0, 1, 1, 1, 0,
-    0, 1, 0, 1, 0,
-    0, 1, 1, 1, 0,
-    0, 1, 0, 1, 0,
-    0, 1, 1, 1, 0,
+val EIGHT = TimerDisplay(
+    listOf(
+        listOf(0, 1, 1, 1, 0),
+        listOf(0, 1, 0, 1, 0),
+        listOf(0, 1, 1, 1, 0),
+        listOf(0, 1, 0, 1, 0),
+        listOf(0, 1, 1, 1, 0),
+    )
 )
 
-val NINE = listOf(
-    0, 1, 1, 1, 0,
-    0, 1, 0, 1, 0,
-    0, 1, 1, 1, 0,
-    0, 0, 0, 1, 0,
-    0, 0, 0, 1, 0,
+val NINE = TimerDisplay(
+    listOf(
+        listOf(0, 1, 1, 1, 0),
+        listOf(0, 1, 0, 1, 0),
+        listOf(0, 1, 1, 1, 0),
+        listOf(0, 0, 0, 1, 0),
+        listOf(0, 0, 0, 1, 0),
+    )
 )
 
-val ZERO = listOf(
-    0, 1, 1, 1, 0,
-    0, 1, 0, 1, 0,
-    0, 1, 0, 1, 0,
-    0, 1, 0, 1, 0,
-    0, 1, 1, 1, 0,
+val ZERO = TimerDisplay(
+    listOf(
+        listOf(0, 1, 1, 1, 0),
+        listOf(0, 1, 0, 1, 0),
+        listOf(0, 1, 0, 1, 0),
+        listOf(0, 1, 0, 1, 0),
+        listOf(0, 1, 1, 1, 0),
+    )
 )
 
 val intToDisplay = mapOf(
