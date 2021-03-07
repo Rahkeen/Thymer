@@ -18,40 +18,31 @@ package com.example.androiddevchallenge.data
 import com.airbnb.mvrx.MavericksState
 import com.airbnb.mvrx.MavericksViewModel
 
-val ONE = listOf(
-    0, 1, 1, 0, 0,
-    0, 0, 1, 0, 0,
-    0, 0, 1, 0, 0,
-    0, 0, 1, 0, 0,
-    0, 1, 1, 1, 0,
-)
-
-val TWO = listOf(
-    0, 1, 1, 1, 0,
-    0, 0, 0, 1, 0,
-    0, 1, 1, 1, 0,
-    0, 1, 0, 0, 0,
-    0, 1, 1, 1, 0,
-)
-
 data class TimerState(
     val numCells: Int = 25,
     val numColumns: Int = 5,
-    val timerValue: Int = 1,
-    val timerDisplay: List<Int> = ONE
+    val timerValue: Int = 0,
+    val timerDisplay: List<Int> = ZERO
 ) : MavericksState
 
 class TimerViewModel(initialState: TimerState) : MavericksViewModel<TimerState>(initialState) {
-    fun toggle() {
+    fun increment() {
         setState {
             updateTimerValue(this)
         }
     }
 
     private fun updateTimerValue(state: TimerState): TimerState {
-        return when (state.timerValue) {
-            1 -> state.copy(timerValue = 2, timerDisplay = TWO)
-            else -> state.copy(timerValue = 1, timerDisplay = ONE)
+        return if (state.timerValue == 9) {
+            state.copy(
+                timerValue = 0,
+                timerDisplay = ZERO
+            )
+        } else {
+            state.copy(
+                timerValue = state.timerValue + 1,
+                timerDisplay = intToDisplay.getValue(state.timerValue + 1)
+            )
         }
     }
 }

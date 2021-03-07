@@ -87,7 +87,7 @@ fun Grid() {
         modifier = Modifier
             .wrapContentSize()
             .clickable {
-                timerViewModel.toggle()
+                timerViewModel.increment()
             },
         verticalArrangement = Arrangement.spacedBy(4.dp),
         horizontalAlignment = Alignment.CenterHorizontally
