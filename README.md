@@ -2,11 +2,6 @@
 
 For the Android Dev Challenge # 2, I built a flip timer concept which a grid of tiles that "flip" to the new time.
 
-![initial](https://user-images.githubusercontent.com/2228493/110274601-0a4a8a80-7f84-11eb-9f7d-f00faff40b64.jpg)
-
-![30](https://user-images.githubusercontent.com/2228493/110274604-0dde1180-7f84-11eb-957f-3bd648386ee6.jpg)
-
-![60](https://user-images.githubusercontent.com/2228493/110274608-10406b80-7f84-11eb-9679-ed6a2835f07b.jpg)
 Some Learning Goals for this Challenge:
 - Get more familiar with the Animation APIs
 - Play around with Coroutines
