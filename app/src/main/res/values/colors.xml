@@ -18,4 +18,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="tile">#FF23263D</color>
+    <color name="lightGreen">#FF85bb5c</color>
+    <color name="green">#FF558b2f</color>
+    <color name="darkGreen">#FF33691e</color>
+    <color name="background">#FF616161</color>
 </resources>

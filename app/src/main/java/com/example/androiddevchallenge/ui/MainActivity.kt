@@ -56,8 +56,8 @@ import com.airbnb.mvrx.compose.mavericksViewModel
 import com.example.androiddevchallenge.data.TimerAction
 import com.example.androiddevchallenge.data.TimerViewModel
 import com.example.androiddevchallenge.ui.theme.MyTheme
-import com.example.androiddevchallenge.ui.theme.darkGreen
-import com.example.androiddevchallenge.ui.theme.darkerGreen
+import com.example.androiddevchallenge.ui.theme.background
+import com.example.androiddevchallenge.ui.theme.darkGrey
 import com.example.androiddevchallenge.ui.theme.lightGreen
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -81,7 +81,7 @@ fun MyApp() {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = darkGreen),
+            .background(color = background),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -95,7 +95,7 @@ fun MyApp() {
         Row {
             BoxButton(
                 text = "Reset",
-                color = darkerGreen,
+                color = darkGrey,
                 textColor = Color.White,
                 action = { viewModel.send(TimerAction.Reset) }
             )
@@ -163,7 +163,7 @@ fun Tile(index: Int = 0, on: Int = 0, rowIndex: Int = 0) {
     val transition = updateTransition(targetState = tileState.value)
     val color = transition.animateColor(transitionSpec = { tween(durationMillis = 500) }) { state ->
         when (state) {
-            0 -> darkGreen
+            0 -> background
             else -> lightGreen
         }
     }
