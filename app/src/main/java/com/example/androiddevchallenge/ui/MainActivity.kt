@@ -148,7 +148,7 @@ fun Grid() {
                 horizontalArrangement = Arrangement.spacedBy(4.dp),
             ) {
                 for (item in 0 until state.value.numColumns) {
-                    Tile(itemId, state.value.timerDisplay.numbers[row][item], row)
+                    Tile(itemId, state.value.timerDisplay.numbers[row][item])
                     itemId++
                 }
             }
@@ -157,17 +157,17 @@ fun Grid() {
 }
 
 @Composable
-fun Tile(index: Int = 0, on: Int = 0, rowIndex: Int = 0) {
+fun Tile(index: Int = 0, on: Int = 0) {
     val scope = rememberCoroutineScope()
     val tileState = remember(index) { mutableStateOf(0) }
     val transition = updateTransition(targetState = tileState.value)
-    val color = transition.animateColor(transitionSpec = { tween(durationMillis = 500) }) { state ->
+    val color = transition.animateColor(transitionSpec = { tween(durationMillis = 400) }) { state ->
         when (state) {
             0 -> background
             else -> lightGreen
         }
     }
-    val rotation = transition.animateFloat(transitionSpec = { tween(durationMillis = 500) }) { state ->
+    val rotation = transition.animateFloat(transitionSpec = { tween(durationMillis = 800) }) { state ->
         when (state) {
             0 -> 0F
             else -> 180F
@@ -175,7 +175,7 @@ fun Tile(index: Int = 0, on: Int = 0, rowIndex: Int = 0) {
     }
 
     scope.launch {
-        delay(75L * rowIndex)
+        delay(15L * index)
         tileState.value = on
     }
 
