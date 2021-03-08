@@ -47,6 +47,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.airbnb.mvrx.compose.collectAsState
 import com.airbnb.mvrx.compose.mavericksViewModel
+import com.example.androiddevchallenge.data.TimerAction
 import com.example.androiddevchallenge.data.TimerViewModel
 import com.example.androiddevchallenge.ui.theme.MyTheme
 import com.example.androiddevchallenge.ui.theme.tileColor
@@ -88,7 +89,7 @@ fun Grid() {
             .wrapContentSize()
             .animateContentSize()
             .clickable {
-                timerViewModel.start()
+                timerViewModel.send(TimerAction.Start)
             },
         verticalArrangement = Arrangement.spacedBy(4.dp),
         horizontalAlignment = Alignment.CenterHorizontally

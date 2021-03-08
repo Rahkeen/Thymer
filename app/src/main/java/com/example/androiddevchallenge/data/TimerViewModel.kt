@@ -60,6 +60,10 @@ data class TimerState(
     }
 }
 
+data class TimerDisplay(
+    val numbers: List<List<Int>>
+)
+
 private fun numDigits(number: Int): Int {
     if (number == 0) return 1
     var current = number
@@ -71,14 +75,26 @@ private fun numDigits(number: Int): Int {
     return digits
 }
 
-data class TimerDisplay(
-    val numbers: List<List<Int>>
-)
+sealed class TimerAction {
+    object Start: TimerAction()
+    data class SetTime(val time: Int): TimerAction()
+}
 
 class TimerViewModel(initialState: TimerState) : MavericksViewModel<TimerState>(initialState) {
-    private val startTime = 20
+    private var startTime = 20
 
-    fun start() {
+    fun send(action: TimerAction) {
+        when(action) {
+            is TimerAction.SetTime -> {
+                updateTime(action.time)
+            }
+            is TimerAction.Start -> {
+               start()
+            }
+        }
+    }
+
+    private fun start() {
         viewModelScope.launch {
             for (i in startTime downTo 0) {
                 setState {
@@ -86,6 +102,12 @@ class TimerViewModel(initialState: TimerState) : MavericksViewModel<TimerState>(
                 }
                 delay(1000L)
             }
+        }
+    }
+
+    private fun updateTime(time: Int) {
+        setState {
+            copy(timerValue = time)
         }
     }
 }
