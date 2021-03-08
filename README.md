@@ -1,4 +1,4 @@
-# Thymer - A Flip Timer
+# Thymer - A Flip Timer 🌿 
 
 For the Android Dev Challenge # 2, I built a flip timer concept which a grid of tiles that "flip" to the new time.
 
