@@ -65,7 +65,7 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
-val BOX_SIZE = 25.dp
+val BOX_SIZE = 15.dp
 
 @Composable
 fun MyApp() {
@@ -99,7 +99,7 @@ fun Grid() {
                 modifier = Modifier
                     .wrapContentWidth()
                     .wrapContentHeight()
-                    .animateContentSize(),
+                    .animateContentSize(animationSpec = tween(durationMillis = 500)),
                 horizontalArrangement = Arrangement.spacedBy(4.dp),
             ) {
                 for (item in 0 until state.value.numColumns) {

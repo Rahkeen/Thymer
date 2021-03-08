@@ -17,101 +17,101 @@ package com.example.androiddevchallenge.data
 
 val ONE = TimerDisplay(
     listOf(
-        listOf(0, 1, 1, 0, 0),
-        listOf(0, 0, 1, 0, 0),
-        listOf(0, 0, 1, 0, 0),
-        listOf(0, 0, 1, 0, 0),
-        listOf(0, 1, 1, 1, 0),
+        listOf(1, 1, 0),
+        listOf(0, 1, 0),
+        listOf(0, 1, 0),
+        listOf(0, 1, 0),
+        listOf(1, 1, 1),
     )
 )
 
 val TWO = TimerDisplay(
     listOf(
-        listOf(0, 1, 1, 1, 0),
-        listOf(0, 0, 0, 1, 0),
-        listOf(0, 1, 1, 1, 0),
-        listOf(0, 1, 0, 0, 0),
-        listOf(0, 1, 1, 1, 0),
+        listOf(1, 1, 1),
+        listOf(0, 0, 1),
+        listOf(1, 1, 1),
+        listOf(1, 0, 0),
+        listOf(1, 1, 1),
     )
 )
 
 val THREE = TimerDisplay(
     listOf(
-        listOf(0, 1, 1, 1, 0),
-        listOf(0, 0, 0, 1, 0),
-        listOf(0, 1, 1, 1, 0),
-        listOf(0, 0, 0, 1, 0),
-        listOf(0, 1, 1, 1, 0),
+        listOf(1, 1, 1),
+        listOf(0, 0, 1),
+        listOf(1, 1, 1),
+        listOf(0, 0, 1),
+        listOf(1, 1, 1),
     )
 )
 
 val FOUR = TimerDisplay(
     listOf(
-        listOf(0, 1, 0, 1, 0),
-        listOf(0, 1, 0, 1, 0),
-        listOf(0, 1, 1, 1, 0),
-        listOf(0, 0, 0, 1, 0),
-        listOf(0, 0, 0, 1, 0),
+        listOf(1, 0, 1),
+        listOf(1, 0, 1),
+        listOf(1, 1, 1),
+        listOf(0, 0, 1),
+        listOf(0, 0, 1),
     )
 )
 
 val FIVE = TimerDisplay(
     listOf(
-        listOf(0, 1, 1, 1, 0),
-        listOf(0, 1, 0, 0, 0),
-        listOf(0, 1, 1, 1, 0),
-        listOf(0, 0, 0, 1, 0),
-        listOf(0, 1, 1, 1, 0),
+        listOf(1, 1, 1),
+        listOf(1, 0, 0),
+        listOf(1, 1, 1),
+        listOf(0, 0, 1),
+        listOf(1, 1, 1),
     )
 )
 
 val SIX = TimerDisplay(
     listOf(
-        listOf(0, 1, 1, 1, 0),
-        listOf(0, 1, 0, 0, 0),
-        listOf(0, 1, 1, 1, 0),
-        listOf(0, 1, 0, 1, 0),
-        listOf(0, 1, 1, 1, 0),
+        listOf(1, 1, 1),
+        listOf(1, 0, 0),
+        listOf(1, 1, 1),
+        listOf(1, 0, 1),
+        listOf(1, 1, 1),
     )
 )
 
 val SEVEN = TimerDisplay(
     listOf(
-        listOf(0, 1, 1, 1, 0),
-        listOf(0, 0, 0, 1, 0),
-        listOf(0, 0, 0, 1, 0),
-        listOf(0, 0, 0, 1, 0),
-        listOf(0, 0, 0, 1, 0),
+        listOf(1, 1, 1),
+        listOf(0, 0, 1),
+        listOf(0, 0, 1),
+        listOf(0, 0, 1),
+        listOf(0, 0, 1),
     )
 )
 
 val EIGHT = TimerDisplay(
     listOf(
-        listOf(0, 1, 1, 1, 0),
-        listOf(0, 1, 0, 1, 0),
-        listOf(0, 1, 1, 1, 0),
-        listOf(0, 1, 0, 1, 0),
-        listOf(0, 1, 1, 1, 0),
+        listOf(1, 1, 1),
+        listOf(1, 0, 1),
+        listOf(1, 1, 1),
+        listOf(1, 0, 1),
+        listOf(1, 1, 1),
     )
 )
 
 val NINE = TimerDisplay(
     listOf(
-        listOf(0, 1, 1, 1, 0),
-        listOf(0, 1, 0, 1, 0),
-        listOf(0, 1, 1, 1, 0),
-        listOf(0, 0, 0, 1, 0),
-        listOf(0, 0, 0, 1, 0),
+        listOf(1, 1, 1),
+        listOf(1, 0, 1),
+        listOf(1, 1, 1),
+        listOf(0, 0, 1),
+        listOf(0, 0, 1),
     )
 )
 
 val ZERO = TimerDisplay(
     listOf(
-        listOf(0, 1, 1, 1, 0),
-        listOf(0, 1, 0, 1, 0),
-        listOf(0, 1, 0, 1, 0),
-        listOf(0, 1, 0, 1, 0),
-        listOf(0, 1, 1, 1, 0),
+        listOf(1, 1, 1),
+        listOf(1, 0, 1),
+        listOf(1, 0, 1),
+        listOf(1, 0, 1),
+        listOf(1, 1, 1),
     )
 )
 

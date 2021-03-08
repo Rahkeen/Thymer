@@ -20,13 +20,16 @@ import com.airbnb.mvrx.MavericksViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-private const val DISPLAY_SIZE = 5
+private const val DISPLAY_WIDTH = 3
+private const val DISPLAY_HEIGHT = 5
 
 data class TimerState(
     val timerValue: Int = 0,
 ) : MavericksState {
+    private val numDigits = numDigits(timerValue)
+    private val numSpaces = numDigits - 1
     val timerDisplay = mergeDisplays(valueToDisplays())
-    val numColumns = DISPLAY_SIZE * numDigits(timerValue)
+    val numColumns = DISPLAY_WIDTH * numDigits + numSpaces
 
     private fun valueToDisplays(): List<TimerDisplay> {
         if (timerValue == 0) return listOf(ZERO)
@@ -42,10 +45,14 @@ data class TimerState(
 
     private fun mergeDisplays(displays: List<TimerDisplay>): TimerDisplay {
         val mergedNumbers = mutableListOf<List<Int>>()
-        for (row in 0 until DISPLAY_SIZE) {
+        for (row in 0 until DISPLAY_HEIGHT) {
             val mergedRow = mutableListOf<Int>()
-            displays.forEach { display ->
-                mergedRow += display.numbers[row]
+            displays.forEachIndexed { idx, display ->
+                mergedRow += if (idx == 0) {
+                    display.numbers[row]
+                } else {
+                    mutableListOf(0) + display.numbers[row]
+                }
             }
             mergedNumbers.add(mergedRow)
         }
