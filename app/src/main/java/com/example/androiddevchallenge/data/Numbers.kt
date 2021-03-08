@@ -127,3 +127,14 @@ val intToDisplay = mapOf(
     9 to NINE,
     0 to ZERO,
 )
+
+fun numDigits(number: Int): Int {
+    if (number == 0) return 1
+    var current = number
+    var digits = 0
+    while (current > 0) {
+        current /= 10
+        digits++
+    }
+    return digits
+}

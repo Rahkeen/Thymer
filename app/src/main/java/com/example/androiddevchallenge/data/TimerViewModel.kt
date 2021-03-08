@@ -17,6 +17,8 @@ package com.example.androiddevchallenge.data
 
 import com.airbnb.mvrx.MavericksState
 import com.airbnb.mvrx.MavericksViewModel
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -64,17 +66,6 @@ data class TimerDisplay(
     val numbers: List<List<Int>>
 )
 
-private fun numDigits(number: Int): Int {
-    if (number == 0) return 1
-    var current = number
-    var digits = 0
-    while (current > 0) {
-        current /= 10
-        digits++
-    }
-    return digits
-}
-
 sealed class TimerAction {
     object Start: TimerAction()
     data class SetTime(val time: Int): TimerAction()
@@ -82,6 +73,7 @@ sealed class TimerAction {
 
 class TimerViewModel(initialState: TimerState) : MavericksViewModel<TimerState>(initialState) {
     private var startTime = 20
+    private var timerJob: Job? = null
 
     fun send(action: TimerAction) {
         when(action) {
@@ -95,7 +87,8 @@ class TimerViewModel(initialState: TimerState) : MavericksViewModel<TimerState>(
     }
 
     private fun start() {
-        viewModelScope.launch {
+        timerJob?.cancel()
+        timerJob = GlobalScope.launch {
             for (i in startTime downTo 0) {
                 setState {
                     copy(timerValue = i)
@@ -109,5 +102,10 @@ class TimerViewModel(initialState: TimerState) : MavericksViewModel<TimerState>(
         setState {
             copy(timerValue = time)
         }
+    }
+
+    override fun onCleared() {
+        timerJob?.cancel()
+        super.onCleared()
     }
 }
