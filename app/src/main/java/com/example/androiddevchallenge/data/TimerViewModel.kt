@@ -67,15 +67,15 @@ data class TimerDisplay(
 )
 
 sealed class TimerAction {
-    data class SetTime(val time: Int): TimerAction()
-    object Reset: TimerAction()
+    data class SetTime(val time: Int) : TimerAction()
+    object Reset : TimerAction()
 }
 
 class TimerViewModel(initialState: TimerState) : MavericksViewModel<TimerState>(initialState) {
     private var timerJob: Job? = null
 
     fun send(action: TimerAction) {
-        when(action) {
+        when (action) {
             is TimerAction.SetTime -> {
                 updateTime(action.time)
                 start()
