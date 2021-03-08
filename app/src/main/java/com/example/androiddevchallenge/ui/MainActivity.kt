@@ -29,12 +29,16 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -42,16 +46,19 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.airbnb.mvrx.compose.collectAsState
 import com.airbnb.mvrx.compose.mavericksViewModel
 import com.example.androiddevchallenge.data.TimerAction
 import com.example.androiddevchallenge.data.TimerViewModel
 import com.example.androiddevchallenge.ui.theme.MyTheme
-import com.example.androiddevchallenge.ui.theme.tileColor
-import com.example.androiddevchallenge.ui.theme.tileSelectedColor
+import com.example.androiddevchallenge.ui.theme.darkGreen
+import com.example.androiddevchallenge.ui.theme.darkerGreen
+import com.example.androiddevchallenge.ui.theme.lightGreen
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -70,13 +77,53 @@ val BOX_SIZE = 15.dp
 
 @Composable
 fun MyApp() {
-    Box(
+    val viewModel: TimerViewModel = mavericksViewModel()
+    Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = tileColor),
-        contentAlignment = Alignment.Center
+            .background(color = darkGreen),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Grid()
+        Spacer(modifier = Modifier.height(32.dp))
+        Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+            BoxButton(text = "30", action = { viewModel.send(TimerAction.SetTime(30)) })
+            BoxButton(text = "60", action = { viewModel.send(TimerAction.SetTime(60)) })
+        }
+        Spacer(modifier = Modifier.height(16.dp))
+        Row {
+            BoxButton(
+                text = "Reset",
+                color = darkerGreen,
+                textColor = Color.White,
+                action = { viewModel.send(TimerAction.Reset) }
+            )
+        }
+    }
+}
+
+@Composable
+fun BoxButton(
+    text: String,
+    color: Color = lightGreen,
+    textColor: Color = Color.Black,
+    action: () -> Unit = {}
+) {
+    Box(
+        modifier = Modifier
+            .wrapContentWidth()
+            .height(60.dp)
+            .background(color = color)
+            .clickable(onClick = action),
+        contentAlignment = Alignment.Center,
+    ) {
+        Text(
+            text = text,
+            color = textColor,
+            fontSize = 24.sp,
+            modifier = Modifier.padding(horizontal = 16.dp)
+        )
     }
 }
 
@@ -87,10 +134,7 @@ fun Grid() {
     Column(
         modifier = Modifier
             .wrapContentSize()
-            .animateContentSize()
-            .clickable {
-                timerViewModel.send(TimerAction.Start)
-            },
+            .animateContentSize(),
         verticalArrangement = Arrangement.spacedBy(4.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -119,8 +163,8 @@ fun Tile(index: Int = 0, on: Int = 0, rowIndex: Int = 0) {
     val transition = updateTransition(targetState = tileState.value)
     val color = transition.animateColor(transitionSpec = { tween(durationMillis = 500) }) { state ->
         when (state) {
-            0 -> tileColor
-            else -> tileSelectedColor
+            0 -> darkGreen
+            else -> lightGreen
         }
     }
     val rotation = transition.animateFloat(transitionSpec = { tween(durationMillis = 500) }) { state ->

@@ -67,33 +67,36 @@ data class TimerDisplay(
 )
 
 sealed class TimerAction {
-    object Start: TimerAction()
     data class SetTime(val time: Int): TimerAction()
+    object Reset: TimerAction()
 }
 
 class TimerViewModel(initialState: TimerState) : MavericksViewModel<TimerState>(initialState) {
-    private var startTime = 20
     private var timerJob: Job? = null
 
     fun send(action: TimerAction) {
         when(action) {
             is TimerAction.SetTime -> {
                 updateTime(action.time)
+                start()
             }
-            is TimerAction.Start -> {
-               start()
+            is TimerAction.Reset -> {
+                timerJob?.cancel()
+                updateTime(0)
             }
         }
     }
 
     private fun start() {
         timerJob?.cancel()
-        timerJob = GlobalScope.launch {
-            for (i in startTime downTo 0) {
-                setState {
-                    copy(timerValue = i)
+        withState { current ->
+            timerJob = GlobalScope.launch {
+                for (i in current.timerValue downTo 0) {
+                    setState {
+                        copy(timerValue = i)
+                    }
+                    delay(1000L)
                 }
-                delay(1000L)
             }
         }
     }

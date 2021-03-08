@@ -24,3 +24,9 @@ val teal200 = Color(0xFF03DAC5)
 
 val tileColor = Color(0xFF23263D)
 val tileSelectedColor = Color(0xFFFAD1AB)
+val resetRed = Color(0xFFef5350)
+
+// Thyme Greens
+val lightGreen = Color(0xFF85bb5c)
+val darkGreen = Color(0xFF558b2f)
+val darkerGreen = Color(0xFF33691e)
