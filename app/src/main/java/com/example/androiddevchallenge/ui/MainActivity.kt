@@ -175,7 +175,7 @@ fun Tile(index: Int = 0, on: Int = 0, rowIndex: Int = 0) {
     }
 
     scope.launch {
-        delay(50L * rowIndex)
+        delay(75L * rowIndex)
         tileState.value = on
     }
 
